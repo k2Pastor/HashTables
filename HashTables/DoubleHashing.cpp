@@ -40,6 +40,19 @@ void DoubleHash::insert(int key)
 				current_size++;
 				break;
 			}
+
+			// Re-hash
+			if (i >= 150)
+			{
+				for (int j = 0; j < table_size; j++)
+				{
+					hash_table[j] = -1;
+					isDeleted[j] = true;
+					i = 1;
+				}
+
+				current_size = 0;
+			}
 			i++;
 		}
 	}

@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#define table_size 17
+//#define table_size 25000
+const int table_size = 10;
 #define prime 7 // простое число, которое должно быть меньше table_size
 
 
@@ -28,12 +29,12 @@ public:
 
 	int hash_function1(int key)
 	{
-		return (key % table_size);
+		return ((key % (table_size - 1)) % (table_size));
 	}
 
 	int hash_function2(int key)
 	{
-		return (prime - (key % prime));
+		return ((table_size - 1) - (key % (table_size - 1)));
 	}
 
 	// Operations: 

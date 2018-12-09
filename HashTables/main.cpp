@@ -1,18 +1,42 @@
 #include "DoubleHashing.h"
 #include "ChainHashing.h"
 #include <ctime>
+#include <vector>
+#include <random>
 
 
+size_t GenerateRandomNumber(std::mt19937& generator)
+{
+	std::uniform_int_distribution<size_t> distribution(0, 52314);
+	return distribution(generator);
+}
 
 int main()
 {
-	/*DoubleHash dh;
-	int array[] = { 19, 27, 36, 732, 64,6,56,23,7,8,34,2,68,123,732,4,543 };
-	int size = sizeof(array) / sizeof(array[0]);
+	DoubleHash dh;
+	double timeStart, timeEnd;
+	int size;
+
+	std::cin >> size;
+
+	std::vector<int> doubleHashVector(size);
+
+	std::random_device random_device;
+	std::mt19937 generator(random_device());
+
+	for (int i = 0; i < size; ++i)
+	{
+		doubleHashVector[i] = GenerateRandomNumber(generator);
+	}
+
+	
+
+
+
 
 	for (int i = 0; i < size; i++)
 	{
-	dh.insert(array[i]);
+		dh.insert(doubleHashVector[i]);
 	}
 
 	std::cout << dh << std::endl;
@@ -27,16 +51,26 @@ int main()
 
 	dh.insert(12);
 	std::cout << dh << std::endl;
-	return 0; */
+	return 0; 
 
-	ChainHash ch(7);
-	int array[] = { 15, 11, 27, 8, 12 };
-	int size = sizeof(array) / sizeof(array[0]);
+	/*ChainHash ch(100);
 	double timeStart, timeEnd;
+	int size;
+
+	std::cin >> size;
+
+	std::vector<int> v1(size);
+
 
 	for (int i = 0; i < size; i++)
 	{
-		ch.insert(array[i]);
+		v1[i] = rand() % 100;
+	}
+
+
+	for (int i = 0; i < size; i++)
+	{
+		ch.insert(v1[i]);
 	}
 
 	timeStart = clock();
@@ -45,6 +79,6 @@ int main()
 
 	std::cout.precision(9);
 	std::cout << ch << std::endl;
-	std::cout << "Time of algorithm is: " << std::fixed << (timeEnd - timeStart) / CLOCKS_PER_SEC << std::endl;
+	std::cout << "Time of algorithm is: " << std::fixed << (timeEnd - timeStart) / CLOCKS_PER_SEC << std::endl; */
 
 }
