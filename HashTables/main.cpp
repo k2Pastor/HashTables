@@ -7,18 +7,20 @@
 
 size_t GenerateRandomNumber(std::mt19937& generator)
 {
-	std::uniform_int_distribution<size_t> distribution(0, 52314);
+	std::uniform_int_distribution<size_t> distribution(0, 52224);
 	return distribution(generator);
 }
 
 int main()
 {
-	DoubleHash dh;
-	double timeStart, timeEnd;
+
+
+
+	/*double timeStart, timeEnd;
 	int size;
 
 	std::cin >> size;
-
+	DoubleHash dh;
 	std::vector<int> doubleHashVector(size);
 
 	std::random_device random_device;
@@ -30,9 +32,6 @@ int main()
 	}
 
 	
-
-
-
 
 	for (int i = 0; i < size; i++)
 	{

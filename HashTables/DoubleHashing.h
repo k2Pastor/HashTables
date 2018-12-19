@@ -2,10 +2,7 @@
 
 #include <iostream>
 
-//#define table_size 25000
-const int table_size = 10;
-#define prime 7 // простое число, которое должно быть меньше table_size
-
+const int table_size = 100;
 
 class DoubleHash
 {
@@ -56,8 +53,25 @@ public:
 		return current_size;
 	}
 
+	void reHash()
+	{
+		auto old_hash_table = hash_table;
+	}
+
 	// Output:
 
 	friend std::ostream& operator << (std::ostream& os, const DoubleHash& dh);
 
 };
+
+
+
+
+
+
+
+
+
+
+
+

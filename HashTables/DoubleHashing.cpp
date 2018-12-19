@@ -22,7 +22,7 @@ void DoubleHash::insert(int key)
 
 	int index = hash_function1(key);
 
-	// Если происходит коллизия
+	
 	if (hash_table[index] != -1)
 	{
 		int index1 = hash_function2(key);
@@ -32,7 +32,7 @@ void DoubleHash::insert(int key)
 		{
 			int newIndex = (index + index1 * i) % table_size;
 
-			// Если коллизия не происходит
+		
 			if (hash_table[newIndex] == -1)
 			{
 				hash_table[newIndex] = key;
@@ -41,22 +41,9 @@ void DoubleHash::insert(int key)
 				break;
 			}
 
-			// Re-hash
-			if (i >= 150)
-			{
-				for (int j = 0; j < table_size; j++)
-				{
-					hash_table[j] = -1;
-					isDeleted[j] = true;
-					i = 1;
-				}
-
-				current_size = 0;
-			}
 			i++;
 		}
 	}
-	// Если коллизия не происходит
 	else {
 		hash_table[index] = key;
 		isDeleted[index] = false;
@@ -126,3 +113,9 @@ std::ostream & operator<<(std::ostream & os, const DoubleHash & dh)
 
 	return os;
 }
+
+
+
+
+
+
