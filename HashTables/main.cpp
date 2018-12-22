@@ -1,83 +1,36 @@
-#include "DoubleHashing.h"
 #include "ChainHashing.h"
+#include <iostream>
 #include <ctime>
 #include <vector>
-#include <random>
 
 
 size_t GenerateRandomNumber(std::mt19937& generator)
 {
-	std::uniform_int_distribution<size_t> distribution(0, 52224);
+	std::uniform_int_distribution<size_t> distribution(0, 100);
 	return distribution(generator);
 }
 
+
 int main()
 {
-
-
-
-	/*double timeStart, timeEnd;
-	int size;
-
-	std::cin >> size;
-	DoubleHash dh;
-	std::vector<int> doubleHashVector(size);
-
 	std::random_device random_device;
 	std::mt19937 generator(random_device());
+	std::mt19937 gen(time(0));
+	std::normal_distribution<> dist(30, 4);
 
-	for (int i = 0; i < size; ++i)
-	{
-		doubleHashVector[i] = GenerateRandomNumber(generator);
-	}
-
+	int size = 200;
+	int data_count = 5;
+	std::vector<int> ChainHashingVector(data_count);
+	ChainHashing ChainHashingTable(5, 2);
 	
-
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < data_count; ++i)
 	{
-		dh.insert(doubleHashVector[i]);
-	}
-
-	std::cout << dh << std::endl;
-	std::cout << dh.search(27) << std::endl;
-	std::cout << dh.search(12) << std::endl;
-
-	std::cout << std::endl;
-
-	dh.remove(732);
-	std::cout << dh << std::endl;
-	std::cout << dh.get_current_size() << std::endl;
-
-	dh.insert(12);
-	std::cout << dh << std::endl;
-	return 0; 
-
-	/*ChainHash ch(100);
-	double timeStart, timeEnd;
-	int size;
-
-	std::cin >> size;
-
-	std::vector<int> v1(size);
-
-
-	for (int i = 0; i < size; i++)
-	{
-		v1[i] = rand() % 100;
+		ChainHashingVector[i] = GenerateRandomNumber(generator);
 	}
 
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < data_count; i++)
 	{
-		ch.insert(v1[i]);
+		ChainHashingTable.Place(Node(ChainHashingVector[i], -1));
 	}
-
-	timeStart = clock();
-	ch.remove(12);
-	timeEnd = clock();
-
-	std::cout.precision(9);
-	std::cout << ch << std::endl;
-	std::cout << "Time of algorithm is: " << std::fixed << (timeEnd - timeStart) / CLOCKS_PER_SEC << std::endl; */
-
 }

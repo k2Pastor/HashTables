@@ -147,11 +147,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ChainHashing.h" />
-    <ClInclude Include="DoubleHashing.h" />
+    <ClInclude Include="MyList.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="OpenAddressingHashing.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ChainHashing.cpp" />
-    <ClCompile Include="DoubleHashing.cpp" />
+    <ClCompile Include="OpenAddressingHashing.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
