@@ -3,6 +3,7 @@
 
 class MyList
 {
+	
 public:
 
 	int size;
@@ -75,7 +76,6 @@ public:
 			tmp->key = element.key;
 			Tail = tmp;
 			size++;
-			return 0;
 		}
 	}
 

@@ -75,7 +75,7 @@ public:
 		else return false;
 	}
 
-	int Place(Node op)
+	void Place(Node op)
 	{
 		int index = abs(hash_function(op.key));
 
@@ -83,7 +83,7 @@ public:
 
 		if (already_inserted == true)
 		{
-			return 1;
+			return ;
 		} 
 
 		mylist[index].Push(op);

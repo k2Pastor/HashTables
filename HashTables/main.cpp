@@ -33,4 +33,6 @@ int main()
 	{
 		ChainHashingTable.Place(Node(ChainHashingVector[i], -1));
 	}
+
+	ChainHashingTable.Print();
 }
