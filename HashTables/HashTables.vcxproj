@@ -149,10 +149,8 @@
     <ClInclude Include="ChainHashing.h" />
     <ClInclude Include="MyList.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="OpenAddressingHashing.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenAddressingHashing.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

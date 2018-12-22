@@ -15,15 +15,14 @@ int main()
 {
 	std::random_device random_device;
 	std::mt19937 generator(random_device());
-	std::mt19937 gen(time(0));
-	std::normal_distribution<> dist(30, 4);
+	
 
 	int size = 200;
-	int data_count = 5;
+	int data_count = 50000;
 	std::vector<int> ChainHashingVector(data_count);
-	ChainHashing ChainHashingTable(5, 2);
+	ChainHashing ChainHashingTable(1000, 5);
 	
-	for (int i = 0; i < data_count; ++i)
+	for (int i = 0; i < data_count; i++)
 	{
 		ChainHashingVector[i] = GenerateRandomNumber(generator);
 	}
@@ -34,5 +33,10 @@ int main()
 		ChainHashingTable.Place(Node(ChainHashingVector[i], -1));
 	}
 
-	ChainHashingTable.Print();
+	if (data_count < 31)
+	{
+		ChainHashingTable.Print();
+	}
+	
+	return 0;
 }

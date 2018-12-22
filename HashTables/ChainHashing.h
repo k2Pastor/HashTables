@@ -1,10 +1,10 @@
 #pragma once
 #include "MyList.h"
 #include <random>
-#include <cmath>
+#include <list>
+#include <iterator>
 
-
-class ChainHashing {
+ class ChainHashing {
 
 public:
 	MyList* mylist;
@@ -17,10 +17,12 @@ public:
 
 	ChainHashing(int _table_size, int _k)
 	{
+		
 		std::random_device random_device;
 		std::mt19937 generator(random_device());
 		current_size = 0;
 		table_size = _table_size;
+		mylist = new MyList[table_size];
 		k = _k;
 		k_independent_hash_functions = new int[k];
 
@@ -94,12 +96,11 @@ public:
 	{
 		for (int i = 0; i < table_size; i++)
 		{
-			std::cout << "---------------\n";
-			std::cout << i + 1;
+			std::cout << i;
 
 			if (mylist[i].size == 0)
 			{
-				std::cout << " - \n";
+				std::cout << "-";
 			}
 			else
 			{
@@ -107,10 +108,11 @@ public:
 				Node *cur = mylist[i].Root;
 				for (int j = 0; j < mylist[i].size; j++)
 				{
-					std::cout << "\t" << i + 1 << "." << j + 1 << "\t" << cur->key << "\n";
+					std::cout << " --> " << cur->key;
 					cur = cur->next;
 				}
 			}
-		}
+			std::cout << std::endl;
+		} 
 	}
 };

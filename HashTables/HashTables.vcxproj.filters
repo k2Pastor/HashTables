@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OpenAddressingHashing.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="MyList.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
@@ -31,9 +28,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenAddressingHashing.cpp">
-      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

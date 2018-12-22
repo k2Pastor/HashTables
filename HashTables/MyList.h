@@ -16,14 +16,6 @@ public:
 		size = 0;
 	}
 
-	~MyList()
-	{
-		if (Root != NULL)
-		{
-			delete Root;
-		}
-	}
-
 	
 	// Поиск элемента:
 	bool Find(int _key)
