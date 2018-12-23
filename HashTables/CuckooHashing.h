@@ -159,8 +159,8 @@ public:
 	
 	int FindItem(int key)
 	{
-		pos[0] = (this->hash_function(key, 1, max_table_size, k_independent_hash_functions1, k_independent_hash_functions2, p, k)) % max_table_size;
-		pos[1] = (this->hash_function(key, 2, max_table_size, k_independent_hash_functions1, k_independent_hash_functions2, p, k)) % max_table_size;
+		pos[0] = abs((this->hash_function(key, 1, max_table_size, k_independent_hash_functions1, k_independent_hash_functions2, p, k))) % max_table_size;
+		pos[1] = abs((this->hash_function(key, 2, max_table_size, k_independent_hash_functions1, k_independent_hash_functions2, p, k))) % max_table_size;
 
 		if(hash_table[0][pos[0]] == key)
 		{

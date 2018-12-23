@@ -185,8 +185,8 @@ public:
 
 	bool FindItem(int key)
 	{
-		int x = hash_function1(key); // x == index
-		int y = hash_function2(key);
+		int x = abs(hash_function1(key)); // x == index
+		int y = abs(hash_function2(key));
 
 		for (int i = 0; i < table_size; i++)
 		{
@@ -206,8 +206,8 @@ public:
 	}
 	void RemoveItem(int key)
 	{
-		int x = hash_function1(key); // x == index
-		int y = hash_function2(key);
+		int x = abs(hash_function1(key)); // x == index
+		int y = abs(hash_function2(key));
 
 		for (int i = 0; i < table_size; i++)
 		{

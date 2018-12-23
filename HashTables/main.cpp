@@ -9,7 +9,7 @@
 
 size_t GenerateRandomNumber(std::mt19937& generator)
 {
-	std::uniform_int_distribution<size_t> distribution(0, 10);
+	std::uniform_int_distribution<size_t> distribution(0, 1000);
 	return distribution(generator);
 }
 
@@ -35,21 +35,20 @@ int main()
 	std::mt19937 generator(random_device());
 	
 
-	int size = 5000;
-	int data_count = 10000;
+	int size = 10;
+	int data_count = 10;
 	std::vector<int> TestVector(data_count);
 	int n = floor(3 * log(size));
 
-	// Обычный метод цепочек
-	
-	ChainHashing ChainHashingTable(10000, 5);
-	
 	for (int i = 0; i < data_count; i++)
 	{
 		TestVector[i] = GenerateRandomNumber(generator);
 	}
 
+	/* // Обычный метод цепочек
 	
+	ChainHashing ChainHashingTable(10000, 5);
+
 	for (int i = 0; i < data_count; i++)
 	{
 		ChainHashingTable.Place(Node(TestVector[i], -1));
@@ -62,11 +61,11 @@ int main()
 		ChainHashingTable.Print();
 	}
 
-	std::cout << std::endl;
+	std::cout << std::endl; */
 
 
-	// Метод Цепочек на std::list
-	ChainHashingOnStdList ChainHashingOnStdListTable(10000, 5);
+	 // Метод Цепочек на std::list
+	/*ChainHashingOnStdList ChainHashingOnStdListTable(10000, 5);
 
 	for (int i = 0; i < data_count; i++)
 	{
@@ -86,20 +85,27 @@ int main()
 		ChainHashingOnStdListTable.Print();
 	}
 
-	// Удаление
-	ChainHashingOnStdListTable.RemoveItem(12);
-
-	std::cout << std::endl;
 
 	// Поиск
-	if (ChainHashingOnStdListTable.FindItem(4))
+	for (int i = 0; i < data_count; i++)
 	{
-		std::cout << "YES" << std::endl;
+		ChainHashingOnStdListTable.FindItem(TestVector[i]);
+	}
+
+	// Удаление
+	for (int i = 0; i < data_count; i++)
+	{
+		ChainHashingOnStdListTable.RemoveItem(TestVector[i]);
 	}
 
 	std::cout << std::endl;
 
-	// Двойное хеширование
+	if (data_count < 101)
+	{
+		ChainHashingOnStdListTable.Print();
+	} */
+
+	/*// Двойное хеширование
 
 	DoubleHash DoubleHashingTable(10000, 5);
 
@@ -120,20 +126,30 @@ int main()
 	std::cout << std::endl;
 	
 	// Поиск
-	if (DoubleHashingTable.FindItem(12))
+
+	for (int i = 0; i < data_count; i++)
 	{
-		std::cout << "YES" << std::endl;
+		DoubleHashingTable.FindItem(TestVector[i]);
 	}
-	else std::cout << "NO" << std::endl;
-
-	// Удаление
-	DoubleHashingTable.RemoveItem(22);
-
 
 	if (data_count < 101)
 	{
 		DoubleHashingTable.Print();
 	}  
+
+	// Удаление
+
+	for (int i = 0; i < data_count; i++)
+	{
+		DoubleHashingTable.RemoveItem(TestVector[i]);
+	}
+
+	std::cout << std::endl;
+
+	if (data_count < 101)
+	{
+		DoubleHashingTable.Print();
+	} */
 
 	// Метод Кукушки
 
@@ -154,16 +170,25 @@ int main()
 	}
 
 	// Поиск
-	if (CuckooHashingTable->FindItem(2))
+
+	for (int i = 0; i < data_count; i++)
 	{
-		std::cout << "YES" << std::endl;
-	} else std::cout << "NO" << std::endl;
+		CuckooHashingTable->FindItem(TestVector[i]);
+	}
 
 	// Удаление
-	CuckooHashingTable->DeleteItem(2);
 
-	
-	std::cout << std::endl;
+	for (int i = 0; i < data_count; i++)
+	{
+		CuckooHashingTable->DeleteItem(TestVector[i]);
+	}
+
+	if (data_count < 101)
+	{
+		CuckooHashingTable->Print();
+	}
+
+	std::cout << std::endl; 
 	
 	
 	return 0;
