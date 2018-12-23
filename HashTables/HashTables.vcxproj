@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="ChainHashing.h" />
     <ClInclude Include="ChainHashingOnStdList.h" />
+    <ClInclude Include="CuckooHashing.h" />
     <ClInclude Include="DoubleHashing.h" />
     <ClInclude Include="MyList.h" />
     <ClInclude Include="Node.h" />

@@ -49,6 +49,7 @@ public:
 			k_independent_hash_functions1[i] = (GenerateRandomNumber(generator) % p);
 			k_independent_hash_functions2[i] = (GenerateRandomNumber(generator) % p);
 		}
+
 	}
 
 	size_t GenerateRandomNumber(std::mt19937& generator)
@@ -60,6 +61,8 @@ public:
 	~DoubleHash()
 	{
 		delete[] hash_table;
+		delete[] k_independent_hash_functions1;
+		delete[] k_independent_hash_functions2;
 	}
 
 	int hash_function1(int key)
@@ -195,7 +198,7 @@ public:
 				}
 			}
 
-			x = (x + y) % 10;
+			x = (x + y) % table_size;
 
 		}
 
@@ -218,7 +221,7 @@ public:
 				}
 			}
 
-			x = (x + y) % 10;
+			x = (x + y) % table_size;
 		}
 	}
 
