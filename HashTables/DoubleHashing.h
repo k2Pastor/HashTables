@@ -15,12 +15,12 @@ class DoubleHash
 	int* k_independent_hash_functions2;
 	int k;
 	const uint64_t p = 2305843009213693951L;
-	
-	
+	bool flag_rehash = true;
+
 
 public:
 
-	
+
 
 	DoubleHash(int _table_size, int _k)
 	{
@@ -98,20 +98,34 @@ public:
 
 		return moduloM;
 	}
+	/*
+	int *old_hash_table = hash_table;
+	int *hash_table = new int[table_size];
+	bool *oldIsDeleted = isDeleted;
+	bool* isDeleted = new bool[table_size];
+	for (int i = 0; i < table_size; i++)
+	isDeleted[i] = true;
 
-	 void  ReHash()
+	for (int i = 0; i < old_table_size; i++)
 	{
+	InsertItem(old_hash_table[i]);
+	isDeleted[i] = oldIsDeleted[i];
+
+	}*/
+	void  ReHash()
+	{
+		flag_rehash = false;
 		int old_table_size = table_size;
 		std::random_device random_device;
 		std::mt19937 generator(random_device());
 
-		/*if (current_size > (0.6 * table_size))
+		if (current_size > (0.6 * table_size))
 		{
 			table_size *= 2;
-		} */
+		}
 
-		//current_size = 0;
-		
+		current_size = 0;
+
 		// Update 
 		k_independent_hash_functions1[0] = (GenerateRandomNumber(generator) % p) + 1;
 		k_independent_hash_functions2[0] = (GenerateRandomNumber(generator) % p) + 1;
@@ -121,18 +135,22 @@ public:
 			k_independent_hash_functions1[i] = (GenerateRandomNumber(generator) % p);
 			k_independent_hash_functions2[i] = (GenerateRandomNumber(generator) % p);
 		}
-		
+
 		int *old_hash_table = hash_table;
-		//hash_table = new int[table_size];
+		int *hash_table = new int[table_size];
+
+
+
 
 		for (int i = 0; i < old_table_size; i++)
 		{
-			hash_table[i] = old_hash_table[i];
+			InsertItem(old_hash_table[i]);
+
 		}
 
-		
 
-		
+
+		flag_rehash = true;
 	}
 
 	void InsertItem(int key)
@@ -167,12 +185,15 @@ public:
 				}
 				i++;
 
-				if (i > (table_size * 1,5))
+				if (i > (table_size / 4))
 				{
-					ReHash();
-					index = abs(hash_function1(key));
-					index1 = abs(hash_function2(key));
+					if (flag_rehash) {
+						ReHash();
+						index = abs(hash_function1(key));
+						index1 = abs(hash_function2(key));
+					}
 				}
+
 			}
 		}
 		else {
@@ -182,7 +203,7 @@ public:
 		}
 	}
 
-
+#pragma optimize( "", off )
 	bool FindItem(int key)
 	{
 		int x = abs(hash_function1(key)); // x == index
@@ -190,7 +211,7 @@ public:
 
 		for (int i = 0; i < table_size; i++)
 		{
-			if ((hash_table[x] != -1) && (!isDeleted[x]))
+			if (hash_table[x] != -1)
 			{
 				if (hash_table[x] == key)
 				{
@@ -198,8 +219,12 @@ public:
 				}
 			}
 
-			x = (x + y) % table_size;
 
+			x = (x + y) % table_size;
+			//x += y;
+			//if (x >= table_size) {
+			//	x -= table_size;
+			//}
 		}
 
 		return false;
@@ -211,17 +236,24 @@ public:
 
 		for (int i = 0; i < table_size; i++)
 		{
-			if ((hash_table[x] != -1) && (!isDeleted[x]))
+			if (hash_table[x] != -1)
 			{
+
 				if (hash_table[x] == key)
 				{
 					hash_table[x] = -1;
-					isDeleted[x] = true;
+
 					current_size--;
+					return;
 				}
 			}
-
+			else return;
 			x = (x + y) % table_size;
+			//x += y;
+			//if (x >= table_size) {
+			//		x -= table_size;
+			//	}
+
 		}
 	}
 

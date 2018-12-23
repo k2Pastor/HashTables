@@ -9,7 +9,7 @@
 
 size_t GenerateRandomNumber(std::mt19937& generator)
 {
-	std::uniform_int_distribution<size_t> distribution(0, 1000);
+	std::uniform_int_distribution<size_t> distribution(0, 100000);
 	return distribution(generator);
 }
 
@@ -35,8 +35,8 @@ int main()
 	std::mt19937 generator(random_device());
 	
 
-	int size = 10;
-	int data_count = 10;
+	int size = 10000;
+	int data_count = 5000;
 	std::vector<int> TestVector(data_count);
 	int n = floor(3 * log(size));
 
@@ -45,7 +45,7 @@ int main()
 		TestVector[i] = GenerateRandomNumber(generator);
 	}
 
-	/* // Обычный метод цепочек
+	 // Обычный метод цепочек
 	
 	ChainHashing ChainHashingTable(10000, 5);
 
@@ -61,11 +61,11 @@ int main()
 		ChainHashingTable.Print();
 	}
 
-	std::cout << std::endl; */
+	std::cout << std::endl;
 
 
 	 // Метод Цепочек на std::list
-	/*ChainHashingOnStdList ChainHashingOnStdListTable(10000, 5);
+	ChainHashingOnStdList ChainHashingOnStdListTable(10000, 5);
 
 	for (int i = 0; i < data_count; i++)
 	{
@@ -103,26 +103,24 @@ int main()
 	if (data_count < 101)
 	{
 		ChainHashingOnStdListTable.Print();
-	} */
+	}  
 
-	/*// Двойное хеширование
+	// Двойное хеширование
 
-	DoubleHash DoubleHashingTable(10000, 5);
+	DoubleHash DoubleHashingTable(50000, 5);
+	
 
 	for (int i = 0; i < data_count; i++)
 	{
 		TestVector[i] = GenerateRandomNumber(generator);
 	}
-
+	std::cout << "Double Hashing :" << std::endl;
 	// Вставка
 	for (int i = 0; i < data_count; i++)
 	{
 		DoubleHashingTable.InsertItem(TestVector[i]);
 	}
 
-	std::cout << "Double Hashing :" << std::endl;
-
-	
 	std::cout << std::endl;
 	
 	// Поиск
@@ -149,7 +147,7 @@ int main()
 	if (data_count < 101)
 	{
 		DoubleHashingTable.Print();
-	} */
+	} 
 
 	// Метод Кукушки
 
@@ -158,6 +156,7 @@ int main()
 
 	MainCuckoo(TestVector, data_count, n, CuckooHashingTable);
 
+	std::cout << "Cuckoo Hashing :" << std::endl;
 	// Вставка
 	for (int i = 0; i < data_count; i++) 
 	{
