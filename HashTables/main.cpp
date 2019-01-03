@@ -49,7 +49,7 @@ int main()
 
 	 // Обычный метод цепочек
 	
-	ChainHashing ChainHashingTable(500000, 5);
+/*	ChainHashing ChainHashingTable(500000, 5);
 
 	auto start = std::chrono::steady_clock::now();
 	for (int i = 0; i < data_count; i++)
@@ -109,14 +109,14 @@ int main()
 	{
 		ChainHashingOnStdListTable.Print();
 	}  
-	//std::cout << "SAASAT" << std::endl;
+	//std::cout << "SAASAT" << std::endl; */
 	// Двойное хеширование
 
 	DoubleHash DoubleHashingTable(1000000, 5);
 	//std::cout << "SAASAT11" << std::endl;
 
 	// Вставка
-	start = std::chrono::steady_clock::now();
+	auto start = std::chrono::steady_clock::now();
 	for (int i = 0; i < data_count; i++)
 	{
 		//if (i % 1000 == 0) {
@@ -127,7 +127,7 @@ int main()
 	}
 	//std::cout << "SAASAT234" << std::endl;
 
-	end = std::chrono::steady_clock::now();
+	auto end = std::chrono::steady_clock::now();
 	std::cout << "Double hashing: " << std::chrono::duration<double, std::milli>(end - start).count() << ";";
 
 	 // Поиск
@@ -137,7 +137,7 @@ int main()
 		DoubleHashingTable.FindItem(TestVector[i]);
 	}
 
-	if (data_count < 101)
+	if (data_count < 31)
 	{
 		DoubleHashingTable.Print();
 	}  
@@ -151,14 +151,14 @@ int main()
 
 	std::cout << std::endl;
 
-	if (data_count < 101)
+	if (data_count < 31)
 	{
 		DoubleHashingTable.Print();
 	} 
 
 	// Метод Кукушки
 
-	CuckooHash *CuckooHashingTable;
+/*	CuckooHash *CuckooHashingTable;
 	CuckooHashingTable = new CuckooHash(5, size);
 
 	MainCuckoo(TestVector, data_count, n, CuckooHashingTable);
@@ -197,7 +197,7 @@ int main()
 		CuckooHashingTable->Print();
 	}
 
-	std::cout << std::endl;  
+	std::cout << std::endl;  */
 	
 	
 	return 0;

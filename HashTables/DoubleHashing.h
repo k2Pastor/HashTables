@@ -20,10 +20,7 @@ class DoubleHash
 	int* k_independent_hash_functions2;
 	int k;
 	const uint64_t p = 2305843009213693951L;
-	bool rehash_flag = false;
-
-
-
+	
 public:
 
 
@@ -108,17 +105,16 @@ public:
 	void ReHash()
 	{
 		std::cout << "Jopa" << std::endl;
-		rehash_flag = true;
 		int old_table_size = table_size;
 		std::random_device random_device;
 		std::mt19937 generator(random_device());
 
-		if (current_size > (0.6 * table_size))
+		/*if (current_size > (0.6 * table_size))
 		{
 			table_size *= 2;
 		} 
 
-		current_size = 0;
+		current_size = 0; */
 		//std::cout << "Jopa12" << std::endl;
 
 		// Update 
@@ -158,8 +154,6 @@ public:
 		}
 		//std::cout << "JopaPOOOO" << std::endl;
 
-
-		rehash_flag = false;
 		delete[] old_hash_table;
 	}
 
@@ -196,7 +190,7 @@ public:
 				}
 				i++;
 
-				if (i > (table_size / 4) && (!rehash_flag))
+				if (i > (table_size / 4))
 				{
 					ReHash();
 					index = abs(hash_function1(key));
