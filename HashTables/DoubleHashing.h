@@ -3,19 +3,25 @@
 #include <iostream>
 #include <random>
 
+#pragma once
+
+#include <iostream>
+#include <random>
+
 
 
 class DoubleHash
 {
 	int *hash_table;
-	bool *isDeleted;
+	//bool *isDeleted;
 	int table_size;
 	int current_size;
 	int* k_independent_hash_functions1;
 	int* k_independent_hash_functions2;
 	int k;
 	const uint64_t p = 2305843009213693951L;
-	bool flag_rehash = true;
+	bool rehash_flag = false;
+
 
 
 public:
@@ -29,13 +35,13 @@ public:
 		table_size = _table_size;
 		k = _k;
 		hash_table = new int[table_size];
-		isDeleted = new bool[table_size];
+		//isDeleted = new bool[table_size];
 		current_size = 0;
 
 		for (int i = 0; i < table_size; i++)
 		{
 			hash_table[i] = -1;
-			isDeleted[i] = true;
+			//isDeleted[i] = true;
 		}
 
 		k_independent_hash_functions1 = new int[k];
@@ -98,23 +104,11 @@ public:
 
 		return moduloM;
 	}
-	/*
-	int *old_hash_table = hash_table;
-	int *hash_table = new int[table_size];
-	bool *oldIsDeleted = isDeleted;
-	bool* isDeleted = new bool[table_size];
-	for (int i = 0; i < table_size; i++)
-	isDeleted[i] = true;
 
-	for (int i = 0; i < old_table_size; i++)
+	void ReHash()
 	{
-	InsertItem(old_hash_table[i]);
-	isDeleted[i] = oldIsDeleted[i];
-
-	}*/
-	void  ReHash()
-	{
-		flag_rehash = false;
+		std::cout << "Jopa" << std::endl;
+		rehash_flag = true;
 		int old_table_size = table_size;
 		std::random_device random_device;
 		std::mt19937 generator(random_device());
@@ -122,9 +116,10 @@ public:
 		if (current_size > (0.6 * table_size))
 		{
 			table_size *= 2;
-		}
+		} 
 
 		current_size = 0;
+		//std::cout << "Jopa12" << std::endl;
 
 		// Update 
 		k_independent_hash_functions1[0] = (GenerateRandomNumber(generator) % p) + 1;
@@ -136,21 +131,36 @@ public:
 			k_independent_hash_functions2[i] = (GenerateRandomNumber(generator) % p);
 		}
 
-		int *old_hash_table = hash_table;
-		int *hash_table = new int[table_size];
+		// int *old_hash_table = hash_table;
+		//hash_table = new int[table_size];
 
+	/*	for (int i = 0; i < old_table_size; i++)
+		{
+			hash_table[i] = old_hash_table[i];
+		} */
 
+		auto old_hash_table = hash_table;
 
+		hash_table = new int[table_size];
+		//std::cout << "Jopa5353" << std::endl;
+
+		for (int i = 0; i < table_size; i++)
+		{
+			hash_table[i] = -1;
+		}
 
 		for (int i = 0; i < old_table_size; i++)
 		{
+			//if (i % 1000 == 0) {
+			//	std::cout << i << std::endl;
+			//}
 			InsertItem(old_hash_table[i]);
-
 		}
+		//std::cout << "JopaPOOOO" << std::endl;
 
 
-
-		flag_rehash = true;
+		rehash_flag = false;
+		delete[] old_hash_table;
 	}
 
 	void InsertItem(int key)
@@ -160,13 +170,13 @@ public:
 			return;
 		}
 
-		if (FindItem(key))
+		/* if (FindItem(key))
 		{
 			return;
-		}
+		} */
 
 		int index = abs(hash_function1(key));
-
+		auto tmp = hash_table[index];
 		if (hash_table[index] != -1)
 		{
 			int index1 = abs(hash_function2(key));
@@ -174,36 +184,34 @@ public:
 
 			while (1)
 			{
+				
 				int newIndex = (index + index1 * i) % table_size;
 
 				if (hash_table[newIndex] == -1)
 				{
 					hash_table[newIndex] = key;
-					isDeleted[newIndex] = false;
+					//isDeleted[newIndex] = false;
 					current_size++;
 					break;
 				}
 				i++;
 
-				if (i > (table_size / 4))
+				if (i > (table_size / 4) && (!rehash_flag))
 				{
-					if (flag_rehash) {
-						ReHash();
-						index = abs(hash_function1(key));
-						index1 = abs(hash_function2(key));
-					}
+					ReHash();
+					index = abs(hash_function1(key));
+					index1 = abs(hash_function2(key));
 				}
-
 			}
 		}
 		else {
 			hash_table[index] = key;
-			isDeleted[index] = false;
+			//isDeleted[index] = false;
 			current_size++;
 		}
 	}
 
-#pragma optimize( "", off )
+
 	bool FindItem(int key)
 	{
 		int x = abs(hash_function1(key)); // x == index
@@ -211,7 +219,7 @@ public:
 
 		for (int i = 0; i < table_size; i++)
 		{
-			if (hash_table[x] != -1)
+			if ((hash_table[x] != -1))
 			{
 				if (hash_table[x] == key)
 				{
@@ -219,12 +227,8 @@ public:
 				}
 			}
 
-
 			x = (x + y) % table_size;
-			//x += y;
-			//if (x >= table_size) {
-			//	x -= table_size;
-			//}
+
 		}
 
 		return false;
@@ -236,24 +240,18 @@ public:
 
 		for (int i = 0; i < table_size; i++)
 		{
-			if (hash_table[x] != -1)
+			if ((hash_table[x] != -1))
 			{
-
 				if (hash_table[x] == key)
 				{
 					hash_table[x] = -1;
-
+					//isDeleted[x] = true;
 					current_size--;
 					return;
 				}
 			}
-			else return;
-			x = (x + y) % table_size;
-			//x += y;
-			//if (x >= table_size) {
-			//		x -= table_size;
-			//	}
 
+			x = (x + y) % table_size;
 		}
 	}
 
@@ -276,7 +274,7 @@ public:
 	{
 		for (int i = 0; i < table_size; i++)
 		{
-			if ((hash_table[i] != -1) && (!isDeleted[i]))
+			if ((hash_table[i] != -1))
 			{
 				std::cout << i << " ---> " << hash_table[i] << std::endl;
 			}
@@ -288,3 +286,5 @@ public:
 	}
 
 };
+
+

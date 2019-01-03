@@ -5,12 +5,13 @@
 
 #include <ctime>
 #include <vector>
+#include <chrono>
 
 
 size_t GenerateRandomNumber(std::mt19937& generator)
 {
-	std::uniform_int_distribution<size_t> distribution(0, 100000);
-	return distribution(generator);
+	std::normal_distribution<double> distribution(0, 75000);
+	return static_cast<size_t>(distribution(generator));
 }
 
 void MainCuckoo(std::vector<int> key, int size, int n, CuckooHash* &hf)
@@ -29,14 +30,15 @@ void MainCuckoo(std::vector<int> key, int size, int n, CuckooHash* &hf)
 
 int main()
 {
+	std::ios::sync_with_stdio(false);
 	std::mt19937 gen(time(0));
-	std::normal_distribution<> dist(30, 4);
+	
 	std::random_device random_device;
 	std::mt19937 generator(random_device());
 	
 
-	int size = 10000;
-	int data_count = 5000;
+	int size = 500000;
+	int data_count = 500000;
 	std::vector<int> TestVector(data_count);
 	int n = floor(3 * log(size));
 
@@ -47,14 +49,16 @@ int main()
 
 	 // Обычный метод цепочек
 	
-	ChainHashing ChainHashingTable(10000, 5);
+	ChainHashing ChainHashingTable(500000, 5);
 
+	auto start = std::chrono::steady_clock::now();
 	for (int i = 0; i < data_count; i++)
 	{
 		ChainHashingTable.Place(Node(TestVector[i], -1));
 	}
-
-	std::cout << "Chain hashing :" << std::endl;
+	auto end = std::chrono::steady_clock::now();
+	std::cout << "Chain hashing :" << std::chrono::duration<double, std::milli>(end - start).count() << ";";
+	std::cout << std::endl;
 
 	if (data_count < 101)
 	{
@@ -65,7 +69,7 @@ int main()
 
 
 	 // Метод Цепочек на std::list
-	ChainHashingOnStdList ChainHashingOnStdListTable(10000, 5);
+	ChainHashingOnStdList ChainHashingOnStdListTable(500000, 5);
 
 	for (int i = 0; i < data_count; i++)
 	{
@@ -73,12 +77,13 @@ int main()
 	}
 
 	// Вставка
+	start = std::chrono::steady_clock::now();
 	for (int i = 0; i < data_count; i++)
 	{
 		ChainHashingOnStdListTable.InsertItem(TestVector[i]);
 	}
-
-	std::cout << "Chain hashing on std::list :" << std::endl;
+	end = std::chrono::steady_clock::now();
+	std::cout << "Chain hashing on std::list: "<< std::chrono::duration<double, std::milli>(end - start).count() << ";";
 
 	if (data_count < 101)
 	{
@@ -86,7 +91,7 @@ int main()
 	}
 
 
-	// Поиск
+	 // Поиск
 	for (int i = 0; i < data_count; i++)
 	{
 		ChainHashingOnStdListTable.FindItem(TestVector[i]);
@@ -104,26 +109,28 @@ int main()
 	{
 		ChainHashingOnStdListTable.Print();
 	}  
-
+	//std::cout << "SAASAT" << std::endl;
 	// Двойное хеширование
 
-	DoubleHash DoubleHashingTable(50000, 5);
-	
+	DoubleHash DoubleHashingTable(1000000, 5);
+	//std::cout << "SAASAT11" << std::endl;
 
-	for (int i = 0; i < data_count; i++)
-	{
-		TestVector[i] = GenerateRandomNumber(generator);
-	}
-	std::cout << "Double Hashing :" << std::endl;
 	// Вставка
+	start = std::chrono::steady_clock::now();
 	for (int i = 0; i < data_count; i++)
 	{
+		//if (i % 1000 == 0) {
+			//std::cout << i << std::endl;
+
+		//}
 		DoubleHashingTable.InsertItem(TestVector[i]);
 	}
+	//std::cout << "SAASAT234" << std::endl;
 
-	std::cout << std::endl;
-	
-	// Поиск
+	end = std::chrono::steady_clock::now();
+	std::cout << "Double hashing: " << std::chrono::duration<double, std::milli>(end - start).count() << ";";
+
+	 // Поиск
 
 	for (int i = 0; i < data_count; i++)
 	{
@@ -156,14 +163,17 @@ int main()
 
 	MainCuckoo(TestVector, data_count, n, CuckooHashingTable);
 
-	std::cout << "Cuckoo Hashing :" << std::endl;
 	// Вставка
+	start = std::chrono::steady_clock::now();
 	for (int i = 0; i < data_count; i++) 
 	{
 		CuckooHashingTable->InsertItemIterative(TestVector[i], 0, 0, n);
 	}
-
-	if (data_count < 101)
+	end = std::chrono::steady_clock::now();
+	std::cout << std::endl;
+	std::cout << "Cuckoo hashing: " << std::chrono::duration<double, std::milli>(end - start).count() << ";";
+	
+	 if (data_count < 101)
 	{
 		CuckooHashingTable->Print();
 	}
@@ -187,7 +197,7 @@ int main()
 		CuckooHashingTable->Print();
 	}
 
-	std::cout << std::endl; 
+	std::cout << std::endl;  
 	
 	
 	return 0;
