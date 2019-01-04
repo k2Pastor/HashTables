@@ -109,13 +109,13 @@ public:
 		std::random_device random_device;
 		std::mt19937 generator(random_device());
 
-		/*if (current_size > (0.6 * table_size))
+		if (current_size > (0.6 * table_size))
 		{
 			table_size *= 2;
 		} 
 
-		current_size = 0; */
-		//std::cout << "Jopa12" << std::endl;
+		current_size = 0; 
+		std::cout << "Jopa12" << std::endl;
 
 		// Update 
 		k_independent_hash_functions1[0] = (GenerateRandomNumber(generator) % p) + 1;
@@ -138,7 +138,7 @@ public:
 		auto old_hash_table = hash_table;
 
 		hash_table = new int[table_size];
-		//std::cout << "Jopa5353" << std::endl;
+		std::cout << "Jopa5353" << std::endl;
 
 		for (int i = 0; i < table_size; i++)
 		{
@@ -170,7 +170,6 @@ public:
 		} */
 
 		int index = abs(hash_function1(key));
-		auto tmp = hash_table[index];
 		if (hash_table[index] != -1)
 		{
 			int index1 = abs(hash_function2(key));
@@ -178,7 +177,9 @@ public:
 
 			while (1)
 			{
-				
+				if (index1 == 0) {
+					index1 += 1;
+				}
 				int newIndex = (index + index1 * i) % table_size;
 
 				if (hash_table[newIndex] == -1)
@@ -192,6 +193,7 @@ public:
 
 				if (i > (table_size / 4))
 				{
+					i = 1;
 					ReHash();
 					index = abs(hash_function1(key));
 					index1 = abs(hash_function2(key));
